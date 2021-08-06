@@ -7,12 +7,17 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
+    "axios": "^0.21.1",
     "clsx": "latest",
+    "html-react-parser": "^1.2.7",
     "material-ui-dropzone": "^3.5.0",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-gallery-carousel": "^0.2.3",
+    "react-image-gallery": "^1.2.6",
+    "semantic-ui-react": "^2.0.3"
   },
   "scripts": {
     "dev": "next",
