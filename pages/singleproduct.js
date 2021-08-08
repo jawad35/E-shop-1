@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Header from "../src/resusable/header";
 import Footer from "../src/resusable/footer";
-import { Button, Grid, Typography, Paper, Divider } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  Divider,
+  Container,
+} from "@material-ui/core";
 import ImageCarousel from "../src/components/singleproduct/ImageCarousel";
 import Box from "@material-ui/core/Box";
+import RemoveIcon from "@material-ui/icons/Remove";
+
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs";
+import Link from "@material-ui/core/Link";
 import ShareIcon from "@material-ui/icons/Share";
 import Rating from "@material-ui/lab/Rating";
 import AddIcon from "@material-ui/icons/Add";
@@ -15,7 +27,6 @@ import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import DeviceHubIcon from "@material-ui/icons/DeviceHub";
 import Chip from "@material-ui/core/Chip";
-import Link from "next/link";
 import html_Parser from "html-react-parser";
 // Radio button
 import Radio from "@material-ui/core/Radio";
@@ -29,17 +40,33 @@ import {
 
 export default function shopsetup(props) {
   const [images, setImages] = useState("");
-  const [value, setValue] = useState(3);
+  const [value, setAgregate] = useState(3);
   const [count, setCounter] = useState(0);
   const [com, setCom] = useState("Commercial");
 
   const handleChange = (event) => {
     setCom(event.target.value);
   };
-  const handleCounter = () => {
+  const handleAdd = () => {
     setCounter(count + 1);
   };
+  const handleSub = () => {
+    setCounter(count - 1);
+  };
 
+  function handleClick(event) {
+    event.preventDefault();
+    console.info("You clicked a breadcrumb.");
+  }
+  const CalAggregate = () => {
+    return (
+      sample.reviews.reduce((total, review) => total + review.rating, 0) /
+      sample.reviews.length
+    ).toFixed(2);
+  };
+  useEffect(() => {
+    setAgregate(CalAggregate());
+  }, []);
   const sample = {
     title: "new bundle 38 in 1 -9000 graphics",
     productCategory: "Graphics",
@@ -67,7 +94,40 @@ export default function shopsetup(props) {
     layered: false, //if true display it in product specs
     tileable: false, //if true display it in product specs
     vector: true, //if true display it in product specs
-    tags: ["Bundle", "Whole Shop", "Gradient"],
+    tags: [
+      "Bundle",
+      "Whole Shop",
+      "Gradient",
+      "Whole Shop",
+      "Gradient",
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+      "Whole Shop",
+      "Gradient",
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+      ,
+      "Whole Shop",
+      "Gradient",
+    ],
     reviews: [
       {
         name: "Jem Thamos",
@@ -87,46 +147,65 @@ export default function shopsetup(props) {
       },
     ],
   };
-  // const returnAggregate = () => {
-  //   sample.reviews.reduce((review, total) => {
-  //     return total.rating + review.rating;
-  //   }) / sample.reviews.length;
-  // };
-  // useEffect(() => {
-  //   console.log(returnAggregate());
-  // });
 
   return (
     <Grid container direction="column">
       <Grid item>
         <Header {...props} />
       </Grid>
-      <Box item mx={8}>
-        <Grid item>
-          <Typography align="right">Starting At $50</Typography>
-        </Grid>
-        <Box
-          py={2}
-          style={{ display: "flex", justifyContent: "space-between" }}
+      <Container>
+        <Grid
+          container
+          item
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingTop: "10px",
+            paddingBottom: "10px",
+          }}
         >
-          <Typography>Graphics PhotoShop</Typography>
-          <Grid
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize="small" />}
+            aria-label="breadcrumb"
           >
-            {/* <ShareIcon fontSize="small">Share</ShareIcon>
-            <Typography style={{ marginLeft: "10px" }}>Share</Typography> */}
-          </Grid>
-        </Box>
-        <Grid container direction="row">
-          <Grid item xl={8} lg={8} sm={12} xs={12} md={12}>
+            <Link color="inherit" href="/" onClick={handleClick}>
+              {sample.productCategory}
+            </Link>
+            <Link
+              color="inherit"
+              href="/getting-started/installation/"
+              onClick={handleClick}
+            >
+              PhotoShop
+            </Link>
+          </Breadcrumbs>
+          <Typography>Starting At $67</Typography>
+        </Grid>
+        <Grid item container>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={8}
+            xl={8}
+            style={{ paddingBottom: "40px" }}
+          >
             <ImageCarousel images={images} />
           </Grid>
-          <Grid item xl={4} lg={4} sm={12} xs={4} md={12}>
-            <Paper style={{ marginLeft: "20px" }}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={5}
+            xl={4}
+            lg={4}
+            style={{
+              margin: "0px auto",
+              paddingLeft: "10px",
+            }}
+          >
+            <Paper>
               <Box p={2}>
                 <Typography style={{ fontWeight: "600" }}>
                   {sample.title}
@@ -140,44 +219,63 @@ export default function shopsetup(props) {
                 alignItems="center"
               >
                 <Rating
-                  name="simple-controlled"
+                  style={{ fontSize: "16px" }}
+                  name="read-only"
                   value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
+                  readOnly
                 />
                 <Box style={{ color: "#32a889" }} pl={2}>
-                  1 Review
+                  {Object.keys(sample.reviews).length} Review
                 </Box>
               </Box>
-              <Box display="flex" mx={2}>
+              <Typography style={{ marginLeft: "15px" }} variant="body2">
                 By
-                <Box style={{ color: "#32a889" }} pl={2}>
+                <span
+                  style={{
+                    fontSize: "13px",
+                    color: "#69bf93",
+                    marginLeft: "5px",
+                  }}
+                >
                   Sami Karachi
-                </Box>
-              </Box>
+                </span>
+              </Typography>
               <Box px={2}>
                 <Divider />
               </Box>
               <Box display="flex" justifyContent="space-between" px={2}>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="h6">License Type</Typography>
-                  <Typography
-                    variant="h6"
-                    style={{ color: "#32a889", marginLeft: "5px" }}
-                  >
-                    what
+                <Box>
+                  <Typography variant="subtitle2">
+                    License Type
+                    <Link
+                      href="/"
+                      style={{
+                        fontSize: "13px",
+                        color: "#69bf93",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      What are these?
+                    </Link>
                   </Typography>
                 </Box>
                 <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  <Typography variant="h6">{count} seat</Typography>
-                  <div onClick={handleCounter} style={{ display: "flex" }}>
-                    <AddIcon style={{ color: "#32a889" }} />
-                  </div>
+                  {count !== 0 ? (
+                    <RemoveIcon
+                      onClick={handleSub}
+                      style={{ color: "#32a889", fontSize: "18px" }}
+                    />
+                  ) : null}
+                  <Typography variant="body2">{count} seat</Typography>
+                  <AddIcon
+                    onClick={handleAdd}
+                    style={{ color: "#32a889", fontSize: "18px" }}
+                  />
                 </Box>
               </Box>
               <Box mx={2}>
@@ -232,9 +330,9 @@ export default function shopsetup(props) {
                           </span>
                         }
                       />
-                      <Box style={{ fontWeight: "600" }}>
+                      <Typography variant="body2" style={{ fontWeight: "600" }}>
                         ${sample.extendedCommercialLicence}
-                      </Box>
+                      </Typography>
                     </Box>
                   </RadioGroup>
                 </FormControl>
@@ -286,16 +384,14 @@ export default function shopsetup(props) {
             </Paper>
           </Grid>
         </Grid>
-      </Box>
-      <Box m={8}>
         <Grid container direction="row">
           <Grid
             item
             xl={8}
             lg={8}
-            md={12}
-            sm={4}
-            xs={4}
+            md={8}
+            sm={12}
+            xs={12}
             justifyContent="center"
           >
             <Box>
@@ -314,7 +410,7 @@ export default function shopsetup(props) {
             </Box>
           </Grid>
 
-          <Grid spacing={4} item xl={4} lg={4} md={12} sm={12} xs={12}>
+          <Grid spacing={4} item xl={4} lg={4} md={4} sm={12} xs={12}>
             <Box mx={2}>
               <Box mb={2}>
                 <Typography style={{ fontWeight: "600" }}>
@@ -354,17 +450,21 @@ export default function shopsetup(props) {
             item
             lg={4}
             xl={4}
-            sm={4}
+            sm={12}
             md={4}
-            xs={4}
-            justifyContent="center"
+            xs={12}
+            style={{ marginTop: "50px" }}
           >
-            <Typography>Meet The Shop</Typography>
+            <Typography variant="subtitle1" style={{ marginBottom: "10px" }}>
+              Meet The Shop
+            </Typography>
             <Paper>
-              <Box m={6}>
+              <Box justifyContent="center">
                 <div
                   style={{
-                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "20px",
                   }}
                 >
                   <img
@@ -372,15 +472,21 @@ export default function shopsetup(props) {
                     alt="profile"
                     width="60px"
                     height="60px"
-                    style={{ marginTop: "30px" }}
                   />
                 </div>
                 <h4 style={{ textAlign: "center" }}>Text hello</h4>
-                <p>
+                <p style={{ textAlign: "center" }}>
                   Moment.js is a legacy project, now in maintenance mode. In
                   most cases, you should choose a different library.
                 </p>
-                <Box display="flex" justifyContent="center" p={2}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "50px",
+                  }}
+                >
                   <Button
                     variant="contained"
                     style={{
@@ -403,19 +509,18 @@ export default function shopsetup(props) {
                   >
                     Message
                   </Button>
-                </Box>
+                </div>
               </Box>
             </Paper>
           </Grid>
           <Grid
-            container
             item
             xl={12}
             lg={12}
             md={12}
             sm={12}
             xs={12}
-            style={{ marginTop: "20px" }}
+            style={{ marginTop: "100px" }}
           >
             {sample.reviews.map((review) => (
               <CommentExampleMetadata
@@ -428,15 +533,23 @@ export default function shopsetup(props) {
             ))}
           </Grid>
 
-          <Grid container item style={{ display: "block" }}>
+          <Grid
+            container
+            item
+            style={{ display: "block", margin: "100px 0px" }}
+          >
             <Typography style={{ fontWeight: "600" }}>
               Keep Exploring
             </Typography>
-            <Box>
+            <Box my={2}>
               {sample.tags.map((tag) => (
-                <span style={{ margin: "3px" }}>
+                <span>
                   <Chip
-                    style={{ backgroundColor: "#cce0ff", border: "none" }}
+                    style={{
+                      backgroundColor: "#cce0ff",
+                      border: "none",
+                      margin: "5px 2px",
+                    }}
                     label={tag}
                     variant="outlined"
                   />
@@ -445,7 +558,7 @@ export default function shopsetup(props) {
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </Container>
       <Grid item>
         <Footer />
       </Grid>
